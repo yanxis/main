@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biletomat</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        .ticket-input {
+            width: 100px;
+            padding: 8px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .quantity-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Biletomat</h1>
+
+    <form id="biletomatForm">
+        <div class="ticket-type">
+            <label for="normalny">Bilet normalny:</label>
+            <div class="quantity-buttons">
+                <button type="button" onclick="zmniejszIlosc('normalny')">-</button>
+                <input type="number" id="normalny" name="normalny" class="ticket-input" min="0" value="0">
+                <button type="button" onclick="zwiekszIlosc('normalny')">+</button>
+            </div>
+        </div>
+
+        <div class="ticket-type">
+            <label for="ulgowy">Bilet ulgowy:</label>
+            <div class="quantity-buttons">
+                <button type="button" onclick="zmniejszIlosc('ulgowy')">-</button>
+                <input type="number" id="ulgowy" name="ulgowy" class="ticket-input" min="0" value="0">
+                <button type="button" onclick="zwiekszIlosc('ulgowy')">+</button>
+            </div>
+        </div>
+
+        <div class="ticket-type">
+            <label for="czasowy">Bilet czasowy:</label>
+            <div class="quantity-buttons">
+                <button type="button" onclick="zmniejszIlosc('czasowy')">-</button>
+                <input type="number" id="czasowy" name="czasowy" class="ticket-input" min="0" value="0">
+                <button type="button" onclick="zwiekszIlosc('czasowy')">+</button>
+            </div>
+        </div>
+
+        <!-- Dodatkowe rodzaje biletów można dodawać w podobny sposób -->
+
+        <button type="button" onclick="obliczCene()">Oblicz cenę</button>
+
+        <div id="wyniki">
+            <p id="normalnyWynik">Bilety normalne: 0</p>
+            <p id="ulgowyWynik">Bilety ulgowe: 0</p>
+            <p id="czasowyWynik">Bilety czasowe: 0</p>
+            <p id="cenaCalkowita">Do zapłaty: 0 zł</p>
+        </div>
+
+        <button type="button" onclick="potwierdzZamowienie()">Potwierdź zamówienie</button>
+    </form>
+
+    <script>
+        function zwiekszIlosc(typBiletu) {
+            var inputElement = document.getElementById(typBiletu);
+            inputElement.value = parseInt(inputElement.value) + 1;
+        }
+
+        function zmniejszIlosc(typBiletu) {
+            var inputElement = document.getElementById(typBiletu);
+            var currentValue = parseInt(inputElement.value);
+            if (currentValue > 0) {
+                inputElement.value = currentValue - 1;
+            }
+        }
+
+        function obliczCene() {
+            var normalny = document.getElementById('normalny').value;
+            var ulgowy = document.getElementById('ulgowy').value;
+            var czasowy = document.getElementById('czasowy').value;
+
+            var cenaNormalny = 10 * normalny;
+            var cenaUlgowy = 5 * ulgowy;
+            var cenaCzasowy = 8 * czasowy;
+            var cenaCalkowita = cenaNormalny + cenaUlgowy + cenaCzasowy;
+
+            document.getElementById('normalnyWynik').innerHTML = 'Bilety normalne: ' + normalny;
+            document.getElementById('ulgowyWynik').innerHTML = 'Bilety ulgowe: ' + ulgowy;
+            document.getElementById('czasowyWynik').innerHTML = 'Bilety czasowe: ' + czasowy;
+            document.getElementById('cenaCalkowita').innerHTML = 'Do zapłaty: ' + cenaCalkowita + ' zł';
+        }
+
+        function potwierdzZamowienie() {
+            alert('Zamówienie potwierdzone!');
+        }
+    </script>
+
+</body>
+</html>
